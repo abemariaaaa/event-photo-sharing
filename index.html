@@ -2,43 +2,248 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Caixia Maven's Fairy First Birthday</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Georgia,serif;background:#fff8fc;color:#694b65;text-align:center}
-.hero{padding:35px 20px 28px;background:linear-gradient(180deg,#fce4f0,#fff8fc)}
-h1{font-size:clamp(30px,8vw,48px);line-height:1.15;margin:18px 0;color:#a65f91}
-.subtitle{font-size:17px;letter-spacing:2px}
-.photo{width:100%;max-width:620px;max-height:65vh;object-fit:cover;border-radius:22px;box-shadow:0 8px 24px #d6a5c755}
-main{padding:24px 18px}
-.card{max-width:620px;margin:0 auto;background:white;padding:24px;border-radius:22px;box-shadow:0 4px 18px #d6a5c733}
-button{border:0;border-radius:25px;padding:14px 24px;background:#c77eb0;color:white;font-size:16px;font-weight:bold}
-input{display:none}
-.note{font-family:Arial,sans-serif;font-size:14px;color:#8e748a;line-height:1.6}
+:root {
+  --pink: #f6dfed;
+  --rose: #a45c8b;
+  --ink: #65445f;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Georgia, serif;
+  color: var(--ink);
+  background: linear-gradient(180deg, #fff8fc, #fceaf5);
+  text-align: center;
+}
+.hero { padding: 34px 18px 20px; }
+h1 {
+  font-size: clamp(29px, 8vw, 44px);
+  line-height: 1.2;
+  margin: 10px auto;
+  color: var(--rose);
+}
+.subtitle { font-size: 18px; line-height: 1.5; }
+main { padding: 20px 16px 40px; max-width: 760px; margin: auto; }
+.card {
+  background: white;
+  border-radius: 28px;
+  padding: 22px 18px;
+  margin: 18px auto;
+  box-shadow: 0 12px 35px #a45c8b16;
+}
+.photo-frame {
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 4/5;
+  margin: auto auto 22px;
+  background: var(--pink);
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: var(--rose);
+  font: 700 30px Arial, sans-serif;
+}
+.photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+h2 { font-size: clamp(25px, 6vw, 34px); margin: 10px auto 16px; }
+p { line-height: 1.6; }
+button, .file-label {
+  border: 0;
+  border-radius: 24px;
+  padding: 14px 20px;
+  background: #bd76a5;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-block;
+  margin: 6px;
+}
+button:disabled { opacity: .55; }
+input[type=file] { display: none; }
+.note { font: 14px Arial, sans-serif; color: #866b82; }
+#status { min-height: 24px; font: 14px Arial, sans-serif; margin: 12px 0; }
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+.gallery figure { margin: 0; background: #fff0f8; border-radius: 14px; overflow: hidden; }
+.gallery img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+.gallery figcaption { font: 12px Arial, sans-serif; padding: 8px; overflow-wrap: anywhere; }
+@media (min-width: 600px) {
+  .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 </style>
 </head>
 <body>
 <header class="hero">
-<div class="subtitle">✨ A LITTLE MAGIC, A LOT OF LOVE ✨</div>
-<h1>Caixia Maven’s<br>Fairy First Birthday</h1>
-<p>One magical year of sweetness and wonder 🧚🏻‍♀️</p>
+  <div style="font-size:28px">🧚🏻‍♀️ ✨ 🌸 ✨ 🧚🏻‍♀️</div>
+  <h1>Caixia Maven’s Fairy First Birthday</h1>
+  <p class="subtitle">One magical year of sweetness and wonder 🧚</p>
 </header>
+
 <main>
-<div class="card">
-<img class="photo" src="https://placehold.co/700x850/f8e1ef/a65f91?text=Caixia+Maven" alt="Caixia Maven">
-<h2>Share the Fairy-Tale Moments ✨</h2>
-<p>Help us capture every smile, hug, and magical memory!</p>
-<label for="photos"><button type="button">📸 Choose Photos</button></label>
-<input id="photos" type="file" accept="image/*" multiple>
-<p class="note">Select your favorite photos from the celebration. Photo upload will be enabled after storage is connected.</p>
-</div>
+  <section class="card">
+    <div class="photo-frame"><span>Caixia Maven 🌸</span></div>
+    <h2>Share the Fairy-Tale Moments ✨</h2>
+    <p>Help us capture every smile, hug, and magical memory. Upload your photos so everyone can enjoy the celebration!</p>
+
+    <label class="file-label" for="photoInput">📸 Choose Photos</label>
+    <input id="photoInput" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+
+    <div>
+      <button id="uploadBtn" type="button">Upload Photos</button>
+      <button id="refreshBtn" type="button">Refresh Gallery</button>
+    </div>
+    <div id="status" role="status">Choose photos, then tap Upload Photos.</div>
+    <p class="note">JPG, PNG, or WEBP · Maximum 10 MB per photo</p>
+  </section>
+
+  <section class="card">
+    <h2>Our Magical Memories 🌷</h2>
+    <p>Photos shared by family and friends</p>
+    <div id="gallery" class="gallery"><p>Loading photos…</p></div>
+  </section>
 </main>
-<footer class="note" style="padding:20px">Made with love for Caixia Maven 💗</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-document.getElementById('photos').addEventListener('change',function(){
-if(this.files.length)alert(this.files.length+' photo(s) selected! Storage connection is still needed to upload them.');
+const SUPABASE_URL = "https://cmxhjzcpsukmeahdlfkt.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Bd3pgt33AGDT3qCgpMrc7A_2NXrB2Li";
+const BUCKET = "event-photos";
+const FOLDER = "event-2026";
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+const input = document.getElementById("photoInput");
+const uploadBtn = document.getElementById("uploadBtn");
+const refreshBtn = document.getElementById("refreshBtn");
+const statusEl = document.getElementById("status");
+const gallery = document.getElementById("gallery");
+
+function setStatus(message) {
+  statusEl.textContent = message;
+}
+
+function safeName(name) {
+  return name.normalize("NFKD")
+    .replace(/[^a-zA-Z0-9._-]/g, "-")
+    .slice(-90) || "photo";
+}
+
+async function loadGallery() {
+  gallery.innerHTML = "<p>Loading photos…</p>";
+
+  const { data, error } = await supabase.storage
+    .from(BUCKET)
+    .list(FOLDER, {
+      limit: 100,
+      sortBy: { column: "created_at", order: "desc" }
+    });
+
+  if (error) {
+    gallery.innerHTML = "";
+    setStatus("Could not load gallery: " + error.message);
+    return;
+  }
+
+  const photos = (data || []).filter(item =>
+    item.name && !item.name.startsWith(".")
+  );
+
+  if (!photos.length) {
+    gallery.innerHTML = "<p>No photos yet. Be the first to share one! 🌸</p>";
+    return;
+  }
+
+  gallery.innerHTML = "";
+
+  for (const photo of photos) {
+    const path = FOLDER + "/" + photo.name;
+
+    const { data: signed, error: signedError } = await supabase.storage
+      .from(BUCKET)
+      .createSignedUrl(path, 3600);
+
+    if (signedError || !signed?.signedUrl) continue;
+
+    const figure = document.createElement("figure");
+    const img = document.createElement("img");
+    img.src = signed.signedUrl;
+    img.alt = "Birthday memory";
+    img.loading = "lazy";
+
+    const caption = document.createElement("figcaption");
+    caption.textContent = photo.name;
+
+    figure.append(img, caption);
+    gallery.appendChild(figure);
+  }
+
+  if (!gallery.children.length) {
+    gallery.innerHTML = "<p>Photos are listed, but previews could not be created. Check your Storage SELECT policy.</p>";
+  }
+}
+
+uploadBtn.addEventListener("click", async () => {
+  const files = Array.from(input.files || []);
+
+  if (!files.length) {
+    setStatus("Please tap Choose Photos and select at least one photo.");
+    return;
+  }
+
+  uploadBtn.disabled = true;
+  setStatus("Uploading " + files.length + " photo(s)…");
+
+  let uploaded = 0;
+  const errors = [];
+
+  for (const file of files) {
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      errors.push(file.name + ": unsupported file type");
+      continue;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      errors.push(file.name + ": larger than 10 MB");
+      continue;
+    }
+
+    const path = FOLDER + "/" + Date.now() + "-" +
+      Math.random().toString(36).slice(2, 9) + "-" + safeName(file.name);
+
+    const { error } = await supabase.storage
+      .from(BUCKET)
+      .upload(path, file, {
+        contentType: file.type,
+        upsert: false
+      });
+
+    if (error) errors.push(file.name + ": " + error.message);
+    else uploaded++;
+  }
+
+  input.value = "";
+  uploadBtn.disabled = false;
+
+  setStatus(uploaded + " photo(s) uploaded." +
+    (errors.length ? " Issues: " + errors.join(" | ") : ""));
+
+  await loadGallery();
 });
+
+refreshBtn.addEventListener("click", loadGallery);
+loadGallery();
 </script>
 </body>
 </html>
