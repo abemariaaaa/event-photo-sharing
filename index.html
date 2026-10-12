@@ -243,7 +243,11 @@ uploadBtn.addEventListener("click", async () => {
 });
 
 refreshBtn.addEventListener("click", loadGallery);
-loadGallery();
+loadGallery().catch((error) => {
+console.error(“Gallery error:”, error);
+setStatus(“Gallery error: “ + (error.message || String(error)));
+gallery.innerHTML = “Unable to load photos. Please refresh.”;
+});
 </script>
 </body>
 </html>
